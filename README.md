@@ -1,11 +1,34 @@
-<h2>Implementando Permissoes no Laravel</h2>
+<h1 id="inicio">Implementando Permissões no Laravel</h1>
 
-[ ] Relationship - Models
+<h2 id="indice">Índice</h2>
 
-[ ] Gates
+**<a href="#1">[1] Relationship - Models</a>**
 
-[ ] Policies
+**<a href="#2">[2] Gates</a>**
 
-[ ] Cache
+**<a href="#3">[3] Policies</a>**
 
-<h2></h2>
+**<a href="#4">[4] Cache</a>**  
+
+
+<h2 id="1">[1] Relationship - Models</h2>
+<a href="#indice">Voltar</a>
+
+
+
+<h2 id="2">[2] Gates</h2>
+<a href="#indice">Voltar</a>
+
+
+
+<h2 id="3">[3] Policies</h2>
+<a href="#indice">Voltar</a>
+
+
+
+<h2 id="4">[4] Cache</h2>
+<a href="#indice">Voltar</a>
+
+
+
+<a href="#inicio">Voltar ao inicio</a>
