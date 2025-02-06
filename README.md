@@ -1,112 +1,88 @@
-# Implementação de Níveis de Acesso no Laravel 10
-
-Este projeto implementa um sistema de controle de permissões utilizando **Laravel Gates** e **Middleware**.
+<h1 id="inicio">Implementando Permissões no Laravel</h1>
 
 <h2>Links Uteis</h2>
 
-**[Video](https://www.youtube.com/watch?v=R8gujLWDwwo&t=712s)**
 
-**[Materia...](https://medium.com/@contato.marcosrf/como-implementar-níveis-de-acesso-no-seu-sistema-laravel-laravel-10-ca73b1ffa52d)**
+  https://www.youtube.com/watch?v=DXOSjT_eU0Q&t=2626s
 
+<h2 id="indice">Índice</h2>
 
-## Requisitos
-- PHP 8+
-- Laravel 10
-- Banco de Dados configurado (SQLite, MySQL, PostgreSQL, etc.)
+**<a href="#1">[1] Relationship - Models</a>**
 
-## Instalação
+**<a href="#2">[2] Gates</a>**
 
-1. Clone o repositório:
-   ```sh
-   git clone https://github.com/malobr/Permission-Laravel.git
-   
-   cd backend
-   ```
+**<a href="#3">[3] Policies</a>**
 
-2. Instale as dependências:
-   ```sh
-   composer install
-   ```
+**<a href="#4">[4] Cache</a>**  
 
-3. Configure o arquivo `.env`:
-   ```sh
-   cp .env.example .env
-   ```
-   Atualize as configurações do banco de dados no `.env`.
-
-4. Gere a chave da aplicação:
-   ```sh
-   php artisan key:generate
-   ```
-
-5. Execute as migrações para criar as tabelas necessárias:
-   ```sh
-   php artisan migrate
-   ```
-
-## Estrutura do Banco de Dados
-
-O sistema utiliza duas tabelas principais para controle de permissões:
-
-- `permissions`: Armazena as permissões disponíveis.
-- `permission_user`: Tabela pivot que faz a relação entre `users` e `permissions`.
-
-## Modelos e Relacionamentos
-
-### `User.php`
-```php
-public function permissions(): BelongsToMany
-{
-    return $this->belongsToMany(Permission::class);
-}
-
-public function assignPermission(string $permission): void
-{
-    $permission = $this->permissions()->firstOrCreate(['name' => $permission]);
-    $this->permissions()->attach($permission);
-}
-
-public function hasPermission(string $permission): bool
-{
-    return $this->permissions()->where('name', $permission)->exists();
-}
-```
-
-## Configuração dos Gates
-
-Dentro do `App\Providers\AuthServiceProvider.php`:
-```php
-Gate::define('admin', function (User $user) {
-    return $user->hasPermission('admin');
-});
-
-Gate::define('default', function (User $user) {
-    return $user->hasPermission('manage-users');
-});
-```
-
-## Uso nos Controllers
-
-Dentro do `PermissionController.php`:
-```php
-Gate::authorize('admin');
-return 'Você é um admin';
-```
-
-## Middleware para Rotas
-
-```php
-Route::get('/test-permission', PermissionController::class)
-    ->middleware('auth', 'can:admin');
-```
-
-## Verificação no Blade
-
-```blade
-@can('admin')
-    <h1>Você é admin</h1>
-@endcan
-```
+**<a href="#5">[5] Observers</a>**  
 
 
+<h2 id="1">[1] Relationship - Models</h2>
+  <a href="#indice">Voltar</a>
 
+      Relacionamento de Muitos Para Muitos
+
+      user <- -> permissions    
+            user_permissions      
+
+
+<h2 id="2">[2] Gates</h2>
+  <a href="#indice">Voltar</a>
+
+      `$this->authorize(Permission::MANEGE_USER)`
+      
+      `@can(Permission::MANEGE_USER)`
+
+      `$user->can(Permission::MANEGE_USER)`
+
+<h2 id="3">[3] Policies</h2>
+  <a href="#indice">Voltar</a>
+
+      
+      public function delete(User $user, Post $post){
+      
+        return $post->creator->is($user) or $user->can(PERMISSION::MANAGE_POSTS);
+      }
+      
+
+
+<h2 id="4">[4] Cache</h2>
+  <a href="#indice">Voltar</a>
+
+      cache permissions
+  
+<h2 id="5">[5] Observers</h2>
+  <a href="#indice">Voltar</a>
+
+      validar o cache quando mudar permissoes
+
+
+<br>
+<h2>Plano de Ataque kkk</h2>
+
+  [x] criar um projeto Laravel
+  
+  [] instalar o laravel/breeze
+  
+  [] criar o model de permissions com a sua migration
+
+  [] criar o relacionamento m-m entre user e permission : permission_user
+
+  [] criar metodos dentro do Models/User pra adicionar permissao ao usuario:  `$user->givePermission('permissao')`
+
+  [] criar um metodo dentro do Models/User para verificar se o usuario possui aquela permissao:       `$user->hasPermission('permissao')`
+
+  [] configurar os gates para verificar as permissoes no AppServiceProvider
+
+  [] configurar os gates para permitir policies + permissoes no AppServiceProvider
+
+  [] colocar cache em tudo:
+  
+      () listar todas as permissoes
+      () listar permissoes por usuario
+      
+  [] revalidar o cache de acordo com mudancas nas permissoes e no pemission_user
+  
+
+<a href="#inicio">Voltar ao inicio</a>
