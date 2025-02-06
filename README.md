@@ -71,7 +71,7 @@
 
   [] criar metodos dentro do Models/User pra adicionar permissao ao usuario:  `$user->givePermission('permissao')`
 
-  [] criar um metodo dentro do Models/User para verificar se o usuario possui aquela permissao: `$user->hasPermission('permissao')`
+  [] criar um metodo dentro do Models/User para verificar se o usuario possui aquela permissao:       `$user->hasPermission('permissao')`
 
   [] configurar os gates para verificar as permissoes no AppServiceProvider
 
