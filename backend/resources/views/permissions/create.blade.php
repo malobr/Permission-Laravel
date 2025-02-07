@@ -21,7 +21,7 @@
                               <p class="text-red-500 font-medium">{{$message}}</p>
                             @enderror
                         </div>
-                        <button class=" text-sm  px-5 py-4">Submit</button>
+                        <button class="bg-slate-700 text-sm rounded-md px-4 py-3">Submit</button>
                     </div>
                 </form>
             </div>
