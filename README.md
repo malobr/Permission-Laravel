@@ -1,5 +1,4 @@
-<h2 id="inicio"></h2>
-# Implementando Permissões no Laravel
+<h1 id="inicio">Implementando Permissões no Laravel</h1>
 
 ## Requisitos
 
