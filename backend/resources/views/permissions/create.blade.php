@@ -10,6 +10,15 @@
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
 
+                <form action="">
+                    <div>
+                        <label for="name" class=" text-lg font-medium text-gray-900 dark:text-white">Name</label>
+                        <div class="my-3">
+                            <input placeholder="Enter Name" type="text" class="border-gray-300 rounded-lg shadow-sm  w-1/2">
+                        </div>
+                        <button class="bg-slate-200 text-sm rounded-md px-5 py-4">Submit</button>
+                    </div>
+                </form>
             </div>
             </div>
         </div>
