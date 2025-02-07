@@ -63,7 +63,7 @@
 
   [x] criar um projeto Laravel
   
-  [] instalar o laravel/breeze
+  [x] instalar o laravel/breeze
   
   [] criar o model de permissions com a sua migration
 
