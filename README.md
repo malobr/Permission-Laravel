@@ -12,7 +12,7 @@
 ### 1. Clonar o Projeto
 
 ```bash
-git clone https://github.com/seu-repositorio/seu-projeto.git
+git clone https://github.com/malobr/Permission-Laravel.git
 cd seu-projeto
 ```
 
