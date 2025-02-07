@@ -1,88 +1,162 @@
 <h1 id="inicio">Implementando Permissões no Laravel</h1>
 
-<h2>Links Uteis</h2>
+## Requisitos
 
 
-  https://www.youtube.com/watch?v=DXOSjT_eU0Q&t=2626s
+https://youtube.com/playlist?list=PLRB0wzP8AS_GfoZTiqsY1397H8LcXgkMZ&si=d-B_vnTrxIk4d79E
 
-<h2 id="indice">Índice</h2>
+- PHP 8+
+- Composer
+- MySQL ou SQLite
+- Node.js e NPM (para o frontend, caso aplicável)
 
-**<a href="#1">[1] Relationship - Models</a>**
+## Passo a Passo
 
-**<a href="#2">[2] Gates</a>**
+### 1. Clonar o Projeto
 
-**<a href="#3">[3] Policies</a>**
+```bash
+git clone https://github.com/malobr/Permission-Laravel.git
+cd seu-projeto
+```
 
-**<a href="#4">[4] Cache</a>**  
+### 2. Instalar Dependências
 
-**<a href="#5">[5] Observers</a>**  
+```bash
+composer install
+npm install && npm run build
+```
 
+### 3. Configurar o Ambiente
 
-<h2 id="1">[1] Relationship - Models</h2>
-  <a href="#indice">Voltar</a>
+Copie o arquivo de exemplo `.env` e configure suas credenciais de banco de dados:
 
-      Relacionamento de Muitos Para Muitos
+```bash
+cp .env.example .env
+```
 
-      user <- -> permissions    
-            user_permissions      
+Gere a chave da aplicação:
 
+```bash
+php artisan key:generate
+```
 
-<h2 id="2">[2] Gates</h2>
-  <a href="#indice">Voltar</a>
+Configure suas credenciais no `.env`:
 
-      `$this->authorize(Permission::MANEGE_USER)`
-      
-      `@can(Permission::MANEGE_USER)`
+```
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=seu_banco
+DB_USERNAME=seu_usuario
+DB_PASSWORD=sua_senha
+```
 
-      `$user->can(Permission::MANEGE_USER)`
+### 4. Criar o Banco de Dados e Rodar as Migrations
 
-<h2 id="3">[3] Policies</h2>
-  <a href="#indice">Voltar</a>
+```bash
+php artisan migrate --seed
+```
 
-      
-      public function delete(User $user, Post $post){
-      
-        return $post->creator->is($user) or $user->can(PERMISSION::MANAGE_POSTS);
-      }
-      
+### 5. Instalar e Configurar o Spatie Permissions
 
+```bash
+composer require spatie/laravel-permission
+```
 
-<h2 id="4">[4] Cache</h2>
-  <a href="#indice">Voltar</a>
+Publique a configuração:
 
-      cache permissions
-  
-<h2 id="5">[5] Observers</h2>
-  <a href="#indice">Voltar</a>
+```bash
+php artisan vendor:publish --provider="Spatie\Permission\PermissionServiceProvider"
+```
 
-      validar o cache quando mudar permissoes
+Rode as migrations:
 
+```bash
+php artisan migrate
+```
 
-<br>
-<h2>Plano de Ataque kkk</h2>
+### 6. Configurar o Middleware e Models
 
-  [x] criar um projeto Laravel
-  
-  [x] instalar o laravel/breeze
-  
-  [] criar o model de permissions com a sua migration
+No modelo `User.php`, adicione:
 
-  [] criar o relacionamento m-m entre user e permission : permission_user
+```php
+use Spatie\Permission\Traits\HasRoles;
 
-  [] criar metodos dentro do Models/User pra adicionar permissao ao usuario:  `$user->givePermission('permissao')`
+class User extends Authenticatable
+{
+    use HasFactory, Notifiable, HasRoles;
+}
+```
 
-  [] criar um metodo dentro do Models/User para verificar se o usuario possui aquela permissao:       `$user->hasPermission('permissao')`
+No `config/auth.php`, altere o `guard_name` para `web`:
 
-  [] configurar os gates para verificar as permissoes no AppServiceProvider
+```php
+'secondary_guard_name' => 'web',
+```
 
-  [] configurar os gates para permitir policies + permissoes no AppServiceProvider
+### 7. Criar Permissões e Roles no Seeder
 
-  [] colocar cache em tudo:
-  
-      () listar todas as permissoes
-      () listar permissoes por usuario
-      
-  [] revalidar o cache de acordo com mudancas nas permissoes e no pemission_user
-  
+No arquivo `DatabaseSeeder.php`:
 
-<a href="#inicio">Voltar ao inicio</a>
+```php
+use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
+use App\Models\User;
+
+public function run()
+{
+    $adminRole = Role::create(['name' => 'admin']);
+    $userRole = Role::create(['name' => 'user']);
+    
+    $manageUsers = Permission::create(['name' => 'manage users']);
+    $adminRole->givePermissionTo($manageUsers);
+
+    $user = User::find(1);
+    $user->assignRole('admin');
+}
+```
+
+Rode novamente os seeders:
+
+```bash
+php artisan db:seed
+```
+
+### 8. Testar as Permissões no Controller
+
+```php
+if (auth()->user()->can('manage users')) {
+    return 'Você tem permissão!';
+} else {
+    return 'Acesso negado';
+}
+```
+
+### 9. Configurar Gates no `AppServiceProvider.php`
+
+```php
+use Illuminate\Support\Facades\Gate;
+use Spatie\Permission\Models\Permission;
+
+public function boot()
+{
+    Permission::all()->each(function ($permission) {
+        Gate::define($permission->name, function ($user) use ($permission) {
+            return $user->hasPermissionTo($permission);
+        });
+    });
+}
+```
+
+### 10. Inicializar o Servidor
+
+```bash
+php artisan serve
+```
+
+Agora, você pode acessar o projeto no navegador e testar as permissões!
+
+---
+
+<a href="#inicio">Voltar ao início</a>
+
