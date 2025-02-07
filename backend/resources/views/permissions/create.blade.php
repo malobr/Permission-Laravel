@@ -10,13 +10,18 @@
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
 
-                <form action="">
+                <form action="{{ route('permissions.store') }}" method="POST">
+                    @vite ('resources/css/app.css')
+                    @csrf
                     <div>
                         <label for="name" class=" text-lg font-medium text-gray-900 dark:text-white">Name</label>
                         <div class="my-3">
-                            <input placeholder="Enter Name" type="text" class="border-gray-300 rounded-lg shadow-sm  w-1/2">
+                            <input value="{{old('name')}}" name="name" placeholder="Enter Name" type="text" class="border-gray-300 rounded-lg shadow-sm  w-1/2">
+                            @error('name')
+                              <p class="text-red-500 font-medium">{{$message}}</p>
+                            @enderror
                         </div>
-                        <button class="bg-slate-200 text-sm rounded-md px-5 py-4">Submit</button>
+                        <button class=" text-sm  px-5 py-4">Submit</button>
                     </div>
                 </form>
             </div>
