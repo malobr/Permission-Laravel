@@ -103,24 +103,17 @@ use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 use App\Models\User;
 
-public function run()
-{
-    $adminRole = Role::create(['name' => 'admin']);
-    $userRole = Role::create(['name' => 'user']);
-    
-    $manageUsers = Permission::create(['name' => 'manage users']);
-    $adminRole->givePermissionTo($manageUsers);
+=======
+## Passo a Passo
 
-    $user = User::find(1);
-    $user->assignRole('admin');
-}
-```
-
-Rode novamente os seeders:
+### 1. Clonar o Projeto
 
 ```bash
-php artisan db:seed
+git clone https://github.com/malobr/Permission-Laravel.git
+cd seu-projeto
 ```
+
+
 
 ### 8. Testar as Permissões no Controller
 
