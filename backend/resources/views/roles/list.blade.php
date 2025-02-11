@@ -41,7 +41,8 @@
                             {{\Carbon\Carbon::parse($role->created_at)->format('d M, Y')}}
                         </td>
                         <td class="px-6 py-3 text-center">
-                          
+                        <a href="{{ route('roles.edit', $role->id) }}" class="bg-slate-700 text-sm rounded-md text-white px-3 py-2 hover:bg-slate-600">Edit</a>
+                        <a href="javascript:void(0);" onclick="deleteRole({{ $role->id }})" class="bg-red-700 text-sm rounded-md text-white px-3 py-2 hover:bg-red-600">Delete</a>
                         </td>
 
                     </tr>
@@ -58,10 +59,10 @@
     </div>
     <x-slot name="script">
     <script type="text/javascript">
-        function deletePermission(id) {
+        function deleteRole(id) {
             if(confirm("Are you sure you want to delete this permission?")) {
                 $.ajax({
-                    url: '{{ route("permissions.destroy", ":id") }}'.replace(':id', id),
+                    url: '{{ route("roles.destroy", ":id") }}'.replace(':id', id),
                     type: "POST",
                     data: {
                         id: id,
@@ -70,7 +71,7 @@
                     },
                     dataType: "JSON",
                     success: function(response) {
-                        window.location.href = '{{ route("permissions.index") }}';
+                        window.location.href = '{{ route("roles.index") }}';
                     },
                     error: function(xhr) {
                         alert("Error deleting permission");
