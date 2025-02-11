@@ -2,9 +2,9 @@
     <x-slot name="header">
         <div class="flex justify-between">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Permissions') }}
+            {{ __('Articles') }}
         </h2>
-        <a href="{{route('permissions.create')}}" class="bg-slate-700 text-sm rounded-md text-white px-3 py-3">Create</a>
+        <a href="{{route('articles.create')}}" class="bg-slate-700 text-sm rounded-md text-white px-3 py-3">Create</a>
         </div>
     </x-slot>
 
@@ -17,27 +17,31 @@
                     <tr class="border-b">
                         <th class="px-6 py-3 text-left" width="60">#</th>
                         <th class="px-6 py-3 text-left">Name</th>
+                        <th class="px-6 py-3 text-left">Author</th>
                         <th class="px-6 py-3 text-left" width="180">Created</th>
                         <th class="px-6 py-3 text-center" width="180">Action</th>
                     </tr>
                 </thead>
                 <tbody class="bg-white">
-                @if ($permissions->isNotEmpty())
-                @foreach ($permissions as $permission)
+                @if ( $articles->isNotEmpty())
+                @foreach ($articles as $article)
                     
                     <tr class="border-b">
                         <td class="px-6 py-3 text-left">
-                            {{$permission->id}}
+                            {{$article->id}}
                         </td>
                         <td class="px-6 py-3 text-left">
-                            {{$permission->name}}
+                            {{$article->title}}
                         </td>
                         <td class="px-6 py-3 text-left">
-                            {{\Carbon\Carbon::parse($permission->created_at)->format('d M, Y')}}
+                            {{$article->author}}
+                        </td>
+                        <td class="px-6 py-3 text-left">
+                            {{\Carbon\Carbon::parse($article->created_at)->format('d M, Y')}}
                         </td>
                         <td class="px-6 py-3 text-center">
-                            <a href="{{ route('permissions.edit', $permission->id) }}" class="bg-slate-700 text-sm rounded-md text-white px-3 py-2 hover:bg-slate-600">Edit</a>
-                            <a href="javascript:void(0);" onclick="deletePermission({{ $permission->id }})" class="bg-red-700 text-sm rounded-md text-white px-3 py-2 hover:bg-red-600">Delete</a>
+                            <a href="{{ route('permissions.edit', $article->id) }}" class="bg-slate-700 text-sm rounded-md text-white px-3 py-2 hover:bg-slate-600">Edit</a>
+                            <a href="javascript:void(0);" onclick="deletePermission({{ $article->id }})" class="bg-red-700 text-sm rounded-md text-white px-3 py-2 hover:bg-red-600">Delete</a>
                         </td>
 
                     </tr>
@@ -47,7 +51,7 @@
                 </tbody>
             </table>
             <div class="my-3">
-                {{$permissions->links()}}
+                {{$articles->links()}}
             </div>
         </div>
     </div>
