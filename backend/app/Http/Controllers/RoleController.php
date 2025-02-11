@@ -11,7 +11,7 @@ class RoleController extends Controller
 {
     public function index(){
         $roles = Role::orderBy('name','ASC')->paginate(10);
-        return view('roles.list');
+        return view('roles.list', ['roles' => $roles]);
     }
 
     public function create(){
