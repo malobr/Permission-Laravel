@@ -17,8 +17,8 @@ class UserController extends Controller implements HasMiddleware
         return [
             new Middleware('permission:view users', only: ['index']),
             new Middleware('permission:edit users', only: ['edit']),
-            //new Middleware('permission:create users', only: ['create']),
-           //new Middleware('permission:delete users', only: ['destroy']),
+            new Middleware('permission:create users', only: ['create']),
+           new Middleware('permission:delete users', only: ['destroy']),
         ];
     }
 
@@ -36,7 +36,8 @@ class UserController extends Controller implements HasMiddleware
      */
     public function create()
     {
-        //
+       $roles = Role::orderBy('name', 'asc')->get();
+        return view('users.create',['roles'=> $roles]);
     }
 
     /**
@@ -44,7 +45,28 @@ class UserController extends Controller implements HasMiddleware
      */
     public function store(Request $request)
     {
-        //
+
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string|min:3',
+            'email' => 'required|email|unique:users,email',
+            'password' => 'required|string|min:8|same:confirm_password',
+            'confirm_password' => 'required',
+        ]);
+        
+        if ($validator->fails()) {
+            return redirect()->route('users.create')->withErrors($validator)->withInput();
+        }
+
+        $user = new User();
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->password = bcrypt($request->password);
+        $user->save();
+        
+        $user->syncRoles($request->role);
+      
+        
+        return redirect()->route('users.index')->with('success', 'User added successfully');
     }
 
     /**
@@ -100,8 +122,17 @@ class UserController extends Controller implements HasMiddleware
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Request $request)
     {
-        //
+        $user = User::findOrFail($request->id);
+
+        if($user == null){
+            session()->flash('error', 'User not found');
+            return response()->json(['status'=>false]);
+        }
+        $user->delete();
+        session()->flash('success', 'User deleted successfully');
+        return response()->json(['status'=>true]);
+
     }
 }

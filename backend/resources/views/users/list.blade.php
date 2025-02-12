@@ -4,8 +4,9 @@
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
             {{ __('Users') }}
         </h2>
-        <a href="{{route('users.create')}}" class="bg-slate-700 text-sm rounded-md text-white px-3 py-3">Create</a>
-
+        @can('create users')
+            <a href="{{route('users.create')}}" class="bg-slate-700 text-sm rounded-md text-white px-3 py-3">Create</a>
+        @endcan
         </div>
     </x-slot>
 
@@ -50,7 +51,7 @@
                             <a href="{{ route('users.edit', $user->id) }}" class="bg-slate-700 text-sm rounded-md text-white px-3 py-2 hover:bg-slate-600">Edit</a>
                         @endcan
                         @can('delete users')
-                            <a href="javascript:void(0);" onclick="deleteRole({{ $user->id }})" class="bg-red-700 text-sm rounded-md text-white px-3 py-2 hover:bg-red-600">Delete</a>
+                            <a href="javascript:void(0);" onclick="deleteUser({{ $user->id }})" class="bg-red-700 text-sm rounded-md text-white px-3 py-2 hover:bg-red-600">Delete</a>
                         @endcan
                         </td>
 
@@ -68,10 +69,10 @@
     </div>
     <x-slot name="script">
     <script type="text/javascript">
-        function deleteRole(id) {
-            if(confirm("Are you sure you want to delete this permission?")) {
+        function deleteUser(id) {
+            if(confirm("Are you sure you want to delete this user?")) {
                 $.ajax({
-                    url: '{{ route("roles.destroy", ":id") }}'.replace(':id', id),
+                    url: '{{ route("users.destroy", ":id") }}'.replace(':id', id),
                     type: "POST",
                     data: {
                         id: id,
@@ -80,10 +81,10 @@
                     },
                     dataType: "JSON",
                     success: function(response) {
-                        window.location.href = '{{ route("roles.index") }}';
+                        window.location.href = '{{ route("users.index") }}';
                     },
                     error: function(xhr) {
-                        alert("Error deleting permission");
+                        alert("Error deleting user");
                     }
                 });
             }
