@@ -2,10 +2,10 @@
     <x-slot name="header">
         <div class="flex justify-between">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Permissions') }}
+            {{ __('Users') }}
         </h2>
-        @can('create permissions')
-            <a href="{{route('permissions.create')}}" class="bg-slate-700 text-sm rounded-md text-white px-3 py-3">Create</a>
+        @can('create users')
+            <a href="{{route('users.create')}}" class="bg-slate-700 text-sm rounded-md text-white px-3 py-3">Create</a>
         @endcan
         </div>
     </x-slot>
@@ -14,36 +14,44 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
 
            <x-message></x-message>
-            <table class="w-full">
+           
+           <table class="w-full">
                 <thead class="bg-gray-300 rounded-lg shadow shadow-gray-500">
                     <tr class="border-b">
                         <th class="px-6 py-3 text-left" width="60">#</th>
                         <th class="px-6 py-3 text-left">Name</th>
+                        <th class="px-6 py-3 text-left">Email</th>
+                        <th class="px-6 py-3 text-left">Roles</th>
                         <th class="px-6 py-3 text-left" width="180">Created</th>
                         <th class="px-6 py-3 text-center" width="180">Action</th>
                     </tr>
                 </thead>
                 <tbody class="bg-white">
-                @if ($permissions->isNotEmpty())
-                @foreach ($permissions as $permission)
+                @if ($users->isNotEmpty())
+                @foreach ($users as $user)
                     
                     <tr class="border-b">
                         <td class="px-6 py-3 text-left">
-                            {{$permission->id}}
+                            {{$user->id}}
                         </td>
                         <td class="px-6 py-3 text-left">
-                            {{$permission->name}}
+                            {{$user->name}}
                         </td>
                         <td class="px-6 py-3 text-left">
-                            {{\Carbon\Carbon::parse($permission->created_at)->format('d M, Y')}}
+                            {{$user->email}}
+                        </td>
+                        <td class="px-6 py-3 text-left">
+                            {{$user->roles->pluck('name')->implode(', ')}}
+                        </td>
+                        <td class="px-6 py-3 text-left">
+                            {{\Carbon\Carbon::parse($user->created_at)->format('d M, Y')}}
                         </td>
                         <td class="px-6 py-3 text-center">
-
-                        @can('edit permissions')
-                            <a href="{{ route('permissions.edit', $permission->id) }}" class="bg-slate-700 text-sm rounded-md text-white px-3 py-2 hover:bg-slate-600">Edit</a>
+                        @can('edit users')
+                            <a href="{{ route('users.edit', $user->id) }}" class="bg-slate-700 text-sm rounded-md text-white px-3 py-2 hover:bg-slate-600">Edit</a>
                         @endcan
-                        @can('delete permissions')
-                            <a href="javascript:void(0);" onclick="deletePermission({{ $permission->id }})" class="bg-red-700 text-sm rounded-md text-white px-3 py-2 hover:bg-red-600">Delete</a>
+                        @can('delete users')
+                            <a href="javascript:void(0);" onclick="deleteUser({{ $user->id }})" class="bg-red-700 text-sm rounded-md text-white px-3 py-2 hover:bg-red-600">Delete</a>
                         @endcan
                         </td>
 
@@ -53,17 +61,18 @@
                     @endif
                 </tbody>
             </table>
+
             <div class="my-3">
-                {{$permissions->links()}}
+                {{$users->links()}}
             </div>
         </div>
     </div>
     <x-slot name="script">
     <script type="text/javascript">
-        function deletePermission(id) {
-            if(confirm("Are you sure you want to delete this permission?")) {
+        function deleteUser(id) {
+            if(confirm("Are you sure you want to delete this user?")) {
                 $.ajax({
-                    url: '{{ route("permissions.destroy", ":id") }}'.replace(':id', id),
+                    url: '{{ route("users.destroy", ":id") }}'.replace(':id', id),
                     type: "POST",
                     data: {
                         id: id,
@@ -72,10 +81,10 @@
                     },
                     dataType: "JSON",
                     success: function(response) {
-                        window.location.href = '{{ route("permissions.index") }}';
+                        window.location.href = '{{ route("users.index") }}';
                     },
                     error: function(xhr) {
-                        alert("Error deleting permission");
+                        alert("Error deleting user");
                     }
                 });
             }
