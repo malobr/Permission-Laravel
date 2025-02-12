@@ -4,6 +4,8 @@
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
             {{ __('Users') }}
         </h2>
+        <a href="{{route('users.create')}}" class="bg-slate-700 text-sm rounded-md text-white px-3 py-3">Create</a>
+
         </div>
     </x-slot>
 
@@ -18,6 +20,7 @@
                         <th class="px-6 py-3 text-left" width="60">#</th>
                         <th class="px-6 py-3 text-left">Name</th>
                         <th class="px-6 py-3 text-left">Email</th>
+                        <th class="px-6 py-3 text-left">Roles</th>
                         <th class="px-6 py-3 text-left" width="180">Created</th>
                         <th class="px-6 py-3 text-center" width="180">Action</th>
                     </tr>
@@ -35,6 +38,9 @@
                         </td>
                         <td class="px-6 py-3 text-left">
                             {{$user->email}}
+                        </td>
+                        <td class="px-6 py-3 text-left">
+                            {{$user->roles->pluck('name')->implode(', ')}}
                         </td>
                         <td class="px-6 py-3 text-left">
                             {{\Carbon\Carbon::parse($user->created_at)->format('d M, Y')}}

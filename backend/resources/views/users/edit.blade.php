@@ -37,8 +37,10 @@
                             @if ($roles->isNotEmpty())
                                 @foreach ($roles as $role)
                                     <div class="mt-3">
-                                        <input type="checkbox" id="role-{{$role->id}}" class="rounded" name="role[]" value="{{$role->name}}">
-                                        <label for="role-{{$role->id}}">{{$role->name}}</label>
+                                    <input {{($hasRoles->contains($role->id)) ? 'checked' : ''}} type="checkbox" id="role-{{$role->id}}" class="rounded" name="role[]" value="{{$role->name}}" >
+                                       {{-- {{ $hasRoles->contains($role->id) ? 'checked' : '' }} --}}
+                                    <label for="role-{{$role->id}}">{{$role->name}}</label>
+
                                     </div>     
                                 @endforeach
                             @endif
