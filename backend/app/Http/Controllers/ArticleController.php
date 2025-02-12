@@ -9,7 +9,7 @@ use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
 
 
-class ArticleController extends Controller implements HasMiddleware
+class ArticleController extends Controller //implements HasMiddleware
 {
 
     public static function middleware(): array{

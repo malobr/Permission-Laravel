@@ -10,7 +10,7 @@ use Illuminate\Validation\Rule;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
 
-class UserController extends Controller implements HasMiddleware
+class UserController extends Controller //implements HasMiddleware
 {
 
     public static function middleware(): array{
