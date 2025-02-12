@@ -1,4 +1,4 @@
-<h1 id="inicio">Implementando Permissões no Laravel</h1>
+<h1 id="inicio">Implementando Permissões no Laravel 11</h1>
 
 ## Requisitos
 
