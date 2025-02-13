@@ -85,7 +85,7 @@ php artisan db:seed --class=SuperAdminSeeder
 
 Isso criará:
 
- -  Uma permissão `gerenciar tudo`  
+ -  Todas as permissoes de todos os cruds..
  -  Uma role `SuperAdmin` com essa permissão  
  -  Um usuário com e-mail `superadmin@teste.com` e senha `12345678`  
  -  Esse usuário terá a role de `SuperAdmin`
@@ -104,6 +104,67 @@ php artisan serve
 
 
 
+
+
+Aqui está como você pode implementar as imagens numeradas de 1 a 10 no fluxo do sistema, seguindo a estrutura do seu tutorial:
+
+---
+
+### Fluxo do Sistema
+
+Agora que você configurou o projeto e as permissões, vamos visualizar o fluxo do sistema, com as etapas representadas por imagens.
+
+1. **Dashboard inicial**
+   - **Imagem 1**: Contem as informacoes de quem esta logado..
+   ![Imagem 1](images/1.png)
+
+2. **Listagem das Permissoes**
+   - **Imagem 2**: Contem a listagem das permissoes ja geradas pela seed....
+   ![Imagem 2](images/2.png)
+
+3. **Criacao das Permissoes**
+   - **Imagem 3**: Criacao das permissoes, as permissopes ja estao predefinidas poara o sistema, para algo expecifico, crie as no codigo....
+   ![Imagem 3](images/3.png)
+
+4. **Edicao das Permissoes**
+   - **Imagem 3**: Edicao das permissoes.
+   ![Imagem 3](images/12.png)
+
+5. **Listagem das Roles**
+   - **Imagem 4**: Listagem das Roles existentes.
+   ![Imagem 4](images/4.png)
+
+6. **Criacao das Roles**
+   - **Imagem 5**: Criacao das Roles atribuindo as pemissoes desejadas.
+   ![Imagem 5](images/5.png)
+
+7. **Edicao das Roles**
+   - **Imagem 6**: Edicao das Roles, alterando suas permissoes e seu nome...
+   ![Imagem 6](images/6.png)
+
+8. **Listagem de Artigos**
+   - **Imagem 7**: Lista dos Artigos.
+   ![Imagem 7](images/7.png)
+
+9. **Criacao dos Artigos**
+   - **Imagem 7**: Criacao dos Artigos, Titulo, Texto e Autor.
+   ![Imagem 12.5](images/12.5.png)
+
+10. **Edicao dos Artigos**
+   - **Imagem 8**: Edicao dos Artigos, Alterando seu titulo, conteudo e autor..
+   ![Imagem 8](images/8.png)
+
+11. **Listagem de Usuarios**
+   - **Imagem 9**: Listagem, dos Usuarios Cadastrados...
+   ![Imagem 9](images/9.png)
+
+12. **Criacao dos Usuarios**
+    - **Imagem 10**: Criacao dos Usuarios com Nome, Email e senha.
+    ![Imagem 10](images/10.png)
+
+12.5. **Edicao dos Usuarios**
+     - **Imagem 10**: Edicao dos Usuarios Alterando seu Nome, Email e Role.
+     ![Imagem 11](images/11.png)
 
 
 
