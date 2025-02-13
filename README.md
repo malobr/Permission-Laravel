@@ -24,7 +24,7 @@ cd backend
 
 ```bash
 composer install
-npm install && npm run build
+npm install && npm run dev
 ```
 
 ### 3. Configurar o Ambiente
