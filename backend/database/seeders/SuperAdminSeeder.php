@@ -12,12 +12,29 @@ class SuperAdminSeeder extends Seeder
 {
     public function run()
     {
-        // Criar a permissão "gerenciar tudo"
-        $permission = Permission::firstOrCreate(['name' => 'gerenciar tudo']);
+        // Lista de permissões baseadas nas rotas fornecidas
+        $permissions = [
+            // Permissions
+            'permissions.index', 'permissions.create', 'permissions.store', 'permissions.edit', 'permissions.update', 'permissions.destroy',
+            
+            // Roles
+            'roles.index', 'roles.create', 'roles.store', 'roles.edit', 'roles.update', 'roles.destroy',
+            
+            // Articles
+            'articles.index', 'articles.create', 'articles.store', 'articles.edit', 'articles.update', 'articles.destroy',
+            
+            // Users
+            'users.index', 'users.create', 'users.store', 'users.edit', 'users.update', 'users.destroy',
+        ];
 
-        // Criar a role "SuperAdmin" e atribuir a permissão
-        $role = Role::firstOrCreate(['name' => 'SuperAdmin']);
-        $role->givePermissionTo($permission);
+        // Criar permissões no banco de dados
+        foreach ($permissions as $permission) {
+            Permission::firstOrCreate(['name' => $permission]);
+        }
+
+        // Criar a role "SuperAdmin" e atribuir todas as permissões
+        $role = Role::firstOrCreate(['name' => 'superadmin']);
+        $role->syncPermissions($permissions);
 
         // Criar um usuário e atribuir a role de SuperAdmin
         $user = User::firstOrCreate(
