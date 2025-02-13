@@ -86,9 +86,9 @@ php artisan db:seed --class=SuperAdminSeeder
 Isso criará:
 
  -  Todas as permissoes de todos os cruds..
- -  Uma role `SuperAdmin` com essa permissão  
+ -  Uma role `superadmin` com todas as permissoes  
  -  Um usuário com e-mail `superadmin@teste.com` e senha `12345678`  
- -  Esse usuário terá a role de `SuperAdmin`
+ -  Esse usuário terá a role de `superadmin`
 
 ### 7. Limpar o cache e Inicializar o Servidor
 
