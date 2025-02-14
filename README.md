@@ -151,7 +151,7 @@ Agora que você configurou o projeto e as permissões, vamos visualizar o fluxo 
     ![Imagem 12](images/10.png)
 
 14. **Edição dos Usuários**
-   - **Imagem 14**: Edição dos usuários, alterando seu nome, e-mail e role.
-   ![Imagem 14](images/11.png)
+    - **Imagem 14**: Edição dos usuários, alterando seu nome, e-mail e role.
+    ![Imagem 14](images/11.png)
 
 <a href="#inicio">Voltar ao início</a>
