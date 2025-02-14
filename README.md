@@ -139,16 +139,16 @@ Agora que você configurou o projeto e as permissões, vamos visualizar o fluxo 
    ![Imagem 9](images/12.5.png)
 
 10. **Edição dos Artigos**
-   - **Imagem 10**: Edição dos artigos, alterando seu título, conteúdo e autor.
-   ![Imagem 10](images/8.png)
+    - **Imagem 10**: Edição dos artigos, alterando seu título, conteúdo e autor.
+    ![Imagem 10](images/8.png)
 
 11. **Listagem de Usuários**
-   - **Imagem 11**: Listagem dos usuários cadastrados.
-   ![Imagem 11](images/9.png)
+    - **Imagem 11**: Listagem dos usuários cadastrados.
+    ![Imagem 11](images/9.png)
 
 12. **Criação dos Usuários**
-   - **Imagem 12**: Criação dos usuários com nome, e-mail e senha.
-   ![Imagem 12](images/10.png)
+    - **Imagem 12**: Criação dos usuários com nome, e-mail e senha.
+    ![Imagem 12](images/10.png)
 
 14. **Edição dos Usuários**
    - **Imagem 14**: Edição dos usuários, alterando seu nome, e-mail e role.
