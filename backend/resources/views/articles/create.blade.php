@@ -29,7 +29,7 @@
                     <div class="bg-black-500 rounded-lg">
                         <label for="name" class=" text-lg font-medium text-gray-900 dark:text-white">Content</label>
                         <div class="my-3">
-                            <textarea name="text" placeholder="Content" id="text" class="border-gray-300 text-black rounded-lg shadow-sm  w-1/2 h-40 {{old('text')}}"></textarea>
+                        <textarea name="content" placeholder="Content" id="content" class="border-gray-300 text-black rounded-lg shadow-sm w-1/2 h-40">{{ old('content') }}</textarea>
 
                         </div>
 
