@@ -1,3 +1,6 @@
+
+
+
 <h3 id="inicio"></h3>
 
 # Implementando Permissões no Laravel 11
@@ -18,7 +21,7 @@ Para um entendimento melhor, aqui está o link da playlist em que o projeto foi 
 ```bash
 git clone https://github.com/malobr/Permission-Laravel.git
 cd backend
-```
+````
 
 ### 2. Instalar Dependências
 
@@ -45,11 +48,11 @@ Configure suas credenciais no `.env`:
 
 ```
 DB_CONNECTION=mysql
-DB_HOST=127.0.0.1
+DB_HOST=db
 DB_PORT=3306
-DB_DATABASE=seu_banco
-DB_USERNAME=seu_usuario
-DB_PASSWORD=sua_senha
+DB_DATABASE=testapieye
+DB_USERNAME=root
+DB_PASSWORD=root
 ```
 
 ### 4. Instalar e Configurar o Spatie Permissions
@@ -84,10 +87,10 @@ php artisan db:seed --class=SuperAdminSeeder
 
 Isso criará:
 
-- Todas as permissões de todos os CRUDs.
-- Uma role `superadmin` com todas as permissões.  
-- Um usuário com e-mail `superadmin@teste.com` e senha `12345678`.  
-- Esse usuário terá a role de `superadmin`.
+* Todas as permissões de todos os CRUDs.
+* Uma role `superadmin` com todas as permissões.
+* Um usuário com e-mail `superadmin@teste.com` e senha `12345678`.
+* Esse usuário terá a role de `superadmin`.
 
 ### 7. Limpar o Cache e Inicializar o Servidor
 
@@ -98,60 +101,98 @@ php artisan optimize:clear
 php artisan serve
 ```
 
+---
+
+## Uso do Docker com o projeto
+
+Caso esteja utilizando Docker, todos os comandos Artisan e npm devem ser executados dentro do container para que funcionem corretamente.
+
+Aqui estão os comandos Docker mais usados para controle dos containers e execução dentro do container Laravel:
+
+```bash
+docker-compose down -v              # Para e remove os containers e volumes associados.
+docker-compose up -d --build        # Cria e inicia os containers, reconstruindo as imagens.
+docker-compose down                 # Apenas para os containers (sem remover volumes).
+docker-compose up -d                # Apenas inicia os containers parados.
+docker exec -it laravel-app php artisan migrate   # Executa as migrations dentro do container laravel-app.
+docker exec -it laravel-app npm install           # Instala as dependências Node.js dentro do container.
+docker exec -it laravel-app npm run build         # Gera o build dos assets do frontend dentro do container.
+```
+
+**Lembre-se:** Sempre que precisar executar um comando artisan ou npm, faça via `docker exec` dentro do container para garantir que os ambientes PHP e Node.js estejam corretos.
+
+---
+
 ## Fluxo do Sistema
 
 Agora que você configurou o projeto e as permissões, vamos visualizar o fluxo do sistema, com as etapas representadas por imagens.
 
 1. **Dashboard inicial**
-   - **Imagem 1**: Contém as informações de quem está logado.
-   ![Imagem 1](images/1.png)
+
+   * **Imagem 1**: Contém as informações de quem está logado.
+     ![Imagem 1](images/1.png)
 
 2. **Listagem das Permissões**
-   - **Imagem 2**: Contém a listagem das permissões já geradas pela seed.
-   ![Imagem 2](images/2.png)
+
+   * **Imagem 2**: Contém a listagem das permissões já geradas pela seed.
+     ![Imagem 2](images/2.png)
 
 3. **Criação das Permissões**
-   - **Imagem 3**: Criação das permissões. As permissões já estão predefinidas para o sistema. Para algo específico, crie-as no código.
-   ![Imagem 3](images/3.png)
+
+   * **Imagem 3**: Criação das permissões. As permissões já estão predefinidas para o sistema. Para algo específico, crie-as no código.
+     ![Imagem 3](images/3.png)
 
 4. **Edição das Permissões**
-   - **Imagem 4**: Edição das permissões.
-   ![Imagem 4](images/12.png)
+
+   * **Imagem 4**: Edição das permissões.
+     ![Imagem 4](images/12.png)
 
 5. **Listagem das Roles**
-   - **Imagem 5**: Listagem das roles existentes.
-   ![Imagem 5](images/4.png)
+
+   * **Imagem 5**: Listagem das roles existentes.
+     ![Imagem 5](images/4.png)
 
 6. **Criação das Roles**
-   - **Imagem 6**: Criação das roles atribuindo as permissões desejadas.
-   ![Imagem 6](images/5.png)
+
+   * **Imagem 6**: Criação das roles atribuindo as permissões desejadas.
+     ![Imagem 6](images/5.png)
 
 7. **Edição das Roles**
-   - **Imagem 7**: Edição das roles, alterando suas permissões e seu nome.
-   ![Imagem 7](images/6.png)
+
+   * **Imagem 7**: Edição das roles, alterando suas permissões e seu nome.
+     ![Imagem 7](images/6.png)
 
 8. **Listagem de Artigos**
-   - **Imagem 8**: Lista dos artigos.
-   ![Imagem 8](images/7.png)
+
+   * **Imagem 8**: Lista dos artigos.
+     ![Imagem 8](images/7.png)
 
 9. **Criação dos Artigos**
-   - **Imagem 9**: Criação dos artigos, com título, texto e autor.
-   ![Imagem 9](images/12.5.png)
+
+   * **Imagem 9**: Criação dos artigos, com título, texto e autor.
+     ![Imagem 9](images/12.5.png)
 
 10. **Edição dos Artigos**
-    - **Imagem 10**: Edição dos artigos, alterando seu título, conteúdo e autor.
-    ![Imagem 10](images/8.png)
+
+    * **Imagem 10**: Edição dos artigos, alterando seu título, conteúdo e autor.
+      ![Imagem 10](images/8.png)
 
 11. **Listagem de Usuários**
-    - **Imagem 11**: Listagem dos usuários cadastrados.
-    ![Imagem 11](images/9.png)
+
+    * **Imagem 11**: Listagem dos usuários cadastrados.
+      ![Imagem 11](images/9.png)
 
 12. **Criação dos Usuários**
-    - **Imagem 12**: Criação dos usuários com nome, e-mail e senha.
-    ![Imagem 12](images/10.png)
 
-14. **Edição dos Usuários**
-    - **Imagem 14**: Edição dos usuários, alterando seu nome, e-mail e role.
-    ![Imagem 14](images/11.png)
+    * **Imagem 12**: Criação dos usuários com nome, e-mail e senha.
+      ![Imagem 12](images/10.png)
+
+13. **Edição dos Usuários**
+
+    * **Imagem 14**: Edição dos usuários, alterando seu nome, e-mail e role.
+      ![Imagem 14](images/11.png)
 
 <a href="#inicio">Voltar ao início</a>
+
+
+
