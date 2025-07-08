@@ -20,6 +20,7 @@
                         <th class="px-6 py-3 text-left" width="60">#</th>
                         <th class="px-6 py-3 text-left">Name</th>
                         <th class="px-6 py-3 text-left">Author</th>
+                        <th class="px-6 py-3 text-left">Content</th>
                         <th class="px-6 py-3 text-left" width="180">Created</th>
                         <th class="px-6 py-3 text-center" width="180">Action</th>
                     </tr>
@@ -27,7 +28,7 @@
                 <tbody class="bg-white">
                 @if ( $articles->isNotEmpty())
                 @foreach ($articles as $article)
-                    
+
                     <tr class="border-b">
                         <td class="px-6 py-3 text-left">
                             {{$article->id}}
@@ -37,6 +38,9 @@
                         </td>
                         <td class="px-6 py-3 text-left">
                             {{$article->author}}
+                        </td>
+                        <td class="px-6 py-3 text-left">
+                            {{$article->content ?? 'Sem conteúdo'}}
                         </td>
                         <td class="px-6 py-3 text-left">
                             {{\Carbon\Carbon::parse($article->created_at)->format('d M, Y')}}
@@ -54,7 +58,7 @@
 
                     </tr>
                     @endforeach
-                    
+
                     @endif
                 </tbody>
             </table>

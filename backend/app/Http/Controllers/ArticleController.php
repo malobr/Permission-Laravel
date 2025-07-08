@@ -47,11 +47,12 @@ class ArticleController extends Controller //implements HasMiddleware
 
             'title'=> 'required|min:5',
             'author'=> 'required|min:3',
+            'content' => 'required|min:10',
         ]) ;
         if ($validator->passes()) {
-            $article = new Article(); 
+            $article = new Article();
             $article->title = $request->title;
-            $article->text = $request->text;
+            $article->content = $request->content;
             $article->author = $request->author;
             $article->save();
             return redirect()->route('articles.index')->with('success', 'Article created successfully.');
@@ -60,7 +61,7 @@ class ArticleController extends Controller //implements HasMiddleware
         }
     }
 
-   
+
     /**
      * Show the form for editing the specified resource.
      */
@@ -85,7 +86,7 @@ class ArticleController extends Controller //implements HasMiddleware
         ]) ;
         if ($validator->passes()) {
             $article->title = $request->title;
-            $article->text = $request->text;
+            $article->content = $request->content; 
             $article->author = $request->author;
             $article->save();
             return redirect()->route('articles.index')->with('success', 'Article updated successfully.');
@@ -104,7 +105,7 @@ class ArticleController extends Controller //implements HasMiddleware
             session('error', 'Article not found');
             return response()->json(['status'=>false]);
        }
-       
+
        $article->delete();
        session('success', 'Article deleted successfully');
        return response()->json(['status'=>true]);
